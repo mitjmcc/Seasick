@@ -52,6 +52,11 @@ public class JobManager : MonoBehaviour {
 				    && !p.GetComponent<Pirate>().doneJob) {
 					j.GetComponent<Job>().doAffect();
 					p.GetComponent<Pirate>().doneJob = true;
+					if (j.GetComponent<Job>().effect < 0)
+						p.GetComponent<Pirate>().updateValues(j.GetComponent<Job>().affectsFood,
+						                                      j.GetComponent<Job>().affectsWater,
+						                                      j.GetComponent<Job>().affectsMorale,
+						                                      j.GetComponent<Job>().effect / 5);
 				}
 			}
 		}

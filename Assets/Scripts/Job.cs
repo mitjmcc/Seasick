@@ -7,6 +7,7 @@ public class Job : MonoBehaviour {
 
 	public bool affectsFood = false;
 	public bool affectsWater = false;
+	public bool affectsMorale = false;
 	public bool affectsWood = false;
 
 	void Start () {
@@ -19,14 +20,14 @@ public class Job : MonoBehaviour {
 
 	public void doAffect() {
 		if (affectsFood) {
-			JobManager.setFood(effect);
-			PirateManager.setHunger(effect);
-		}
-		else if (affectsWater) {
-			JobManager.setWater(effect);
-			PirateManager.setThirst(effect);
-		}
-		else if (affectsWood) 
+			JobManager.setFood (effect);
+			PirateManager.setHunger (effect);
+		} else if (affectsWater) {
+			JobManager.setWater (effect);
+			PirateManager.setThirst (effect);
+		} else if (affectsMorale) {
+
+		} else if (affectsWood) 
 			JobManager.setWood(effect);
 		PirateManager.calculateTotals ();
 	}

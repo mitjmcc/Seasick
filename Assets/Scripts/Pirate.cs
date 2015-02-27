@@ -58,4 +58,16 @@ public class Pirate : MonoBehaviour {
 		Sprite [] pirateFaces = GameObject.Find ("PirateManager").GetComponent<PirateManager> ().pirateFaces;
 		GameObject.Find ("StatBars").GetComponent<StatBarAnimator>().changeFaces(pirateFaces);
 	}
+
+	public void updateValues(bool h, bool t, bool m, int effect) {
+		if (h)
+			hunger += effect;
+		Debug.Log (hunger);
+		if (t)
+			thirst += effect;
+		Debug.Log (thirst);
+		if (m)
+			morale += effect;
+		Debug.Log (morale);
+	}
 }

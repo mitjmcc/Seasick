@@ -12,6 +12,7 @@ public class StatBarAnimator : MonoBehaviour {
 	private int maxMorale = Pirate.getMaxMorale ();
 	private float happiness; // causes background color of portrait to change. Ranges from -1 to 1;
 	private Image portrait; 
+	private ArrayList displays;
 	private Sprite[] faces;
 
 	// Use this for initialization
@@ -20,6 +21,11 @@ public class StatBarAnimator : MonoBehaviour {
 		thirst = 0;
 		morale = 0;
 		happiness = -1;
+		displays = new ArrayList ();
+		foreach (GameObject g in GameObject.FindGameObjectsWithTag ("CharacterDisplay")) {
+			g.GetComponent<Image> ().enabled = false;
+			displays.Add (g.GetComponent<Image> ());
+		}
 		portrait = GameObject.Find("PirateFace").GetComponent<Image>();
 		portrait.enabled = false;
 	}
@@ -32,18 +38,18 @@ public class StatBarAnimator : MonoBehaviour {
 			hunger = 0;
 			thirst = 0;
 			morale = 0;
+			toggleCharacterGUI(false);
 			portrait.enabled = false;
 		} else {
 			portrait.enabled = true;
+			toggleCharacterGUI(true);
 			changePortrait ();
+			//Debug.Log ("Happiness: " + happiness);
 		}
-
-
-
-		GameObject.Find ("HungerBar").GetComponent<Image>().fillAmount =  ((float) hunger) / maxHunger;
-		GameObject.Find ("ThirstBar").GetComponent<Image>().fillAmount = ((float) thirst) / maxThirst;
-		GameObject.Find ("MoraleBar").GetComponent<Image>().fillAmount = ((float) morale) / maxMorale;
-		Debug.Log ("Happiness: " + happiness);
+		
+		GameObject.Find ("HungerBar").GetComponent<Image>().fillAmount =  ((float) hunger / maxHunger);
+		GameObject.Find ("ThirstBar").GetComponent<Image>().fillAmount = ((float) thirst / maxThirst);
+		GameObject.Find ("MoraleBar").GetComponent<Image>().fillAmount = ((float) morale / maxMorale);
 	}
 
 	private void updateBgColor() {
@@ -60,36 +66,15 @@ public class StatBarAnimator : MonoBehaviour {
 	}
 
 	public void changeHunger(int amount) {
-
-		if (amount > maxHunger) {
-			hunger = maxHunger;
-		} else if (amount < 0) {
-			hunger = 0;
-		} else {
-			hunger = amount;
-		}
+		hunger = (amount < 0) ? 0 : ((amount > maxHunger) ? maxHunger : amount);
 	}
 
 	public void changeThirst(int amount) {
-
-		if (amount > maxThirst) {
-			thirst = maxThirst;
-		} else if (amount < 0) {
-			thirst = 0;
-		} else {
-			thirst = amount;
-		}
+		thirst = (amount < 0) ? 0 : ((amount > maxThirst) ? maxThirst : amount);
 	}
 
 	public void changeMorale(int amount) {
-
-		if (amount > maxMorale) {
-			morale = maxMorale;
-		} else if (amount < 0) {
-			morale = 0;
-		} else {
-			morale = amount;
-		}
+		morale = (amount < 0) ? 0 : ((amount > maxMorale) ? maxMorale : amount);
 	}
 
 	public void changeFaces(Sprite[] pirateFaces) {
@@ -107,9 +92,13 @@ public class StatBarAnimator : MonoBehaviour {
 		} else if (happiness <= -0.2F && happiness > -0.6F) {
 			portrait.sprite = faces [3];
 		} else {
-			portrait.sprite = faces [4];
+//			portrait.sprite = faces [3];
 		}
 
 	}
-	
+
+	public void toggleCharacterGUI(bool b) {
+		foreach (Image i in displays)
+			i.enabled = b;
+	}
 }
