@@ -8,27 +8,34 @@ public class Pirate : MonoBehaviour {
 	private static int maxThirst = 15;
 	private static int maxMorale = 50;
 
-	private NavMeshAgent agent;
+	public NavMeshAgent agent;
 
 	public int hunger = 5;
 	public int thirst = 5;
 	public int morale = 5;
 
-	public Vector3 curLocation;
+	public Vector3 origLocation;
 	public bool selected = false;
 	public bool doneJob = false;
+	public bool returning = false;
+
+	public Job lastJob;
 
 	public AudioClip[] pirateSpeechClips;
 	
 	//Initialization
 	void Start () {
-
+		agent = gameObject.GetComponent<NavMeshAgent>();
+		origLocation = gameObject.transform.position;
 	}
 
 	void Update () {
 		if (selected) {
 			updateUI ();
 		}
+
+		if (gameObject.transform.position == origLocation)
+			returning = false;
 	}
 
 	public void say(int audioIndex) {
@@ -38,6 +45,8 @@ public class Pirate : MonoBehaviour {
 			audio.Play ();
 		}
 	}
+
+
 
 	public static int getMaxHunger() {
 		return maxHunger;

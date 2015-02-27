@@ -9,9 +9,12 @@ public class Job : MonoBehaviour {
 	public bool affectsWater = false;
 	public bool affectsMorale = false;
 	public bool affectsWood = false;
+	public bool boatJob = false;
+
+	public Vector3 origLocation;
 
 	void Start () {
-	
+		origLocation = gameObject.transform.position;
 	}
 
 	void Update () {

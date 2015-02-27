@@ -68,7 +68,10 @@ public class DayNightController : MonoBehaviour
 	private float lightIntensity;
 
 	// blend value of skybox using SkyBoxBlend Shader in render settings range 0-1  
-	private float SkyboxBlendFactor = 0.0f;  
+	private float SkyboxBlendFactor = 0.0f; 
+
+	//Storing the previous hour
+	private int oldHour;
 
 	/// Initializes working variables and performs starting calculations.  
 	void Initialize ()
@@ -82,7 +85,8 @@ public class DayNightController : MonoBehaviour
 		timePerHour = dayCycleLength / hoursPerDay;  
 		if (light != null) {
 			lightIntensity = light.intensity;
-		}  
+		}
+		oldHour = worldTimeHour;
 	}  
 
 	/// Sets the script control fields to reasonable default values for an acceptable day/night cycle effect.  
@@ -134,9 +138,13 @@ public class DayNightController : MonoBehaviour
 			if (daysPast > 0)
 				NightlyEventManager.instance.activateEvent();
 			daysPast++;
-			PirateManager.pirateJobReset();
 			Time.timeScale = 1;
-		}  
+		}
+		
+		if (worldTimeHour > oldHour + 3) {
+			PirateManager.pirateJobReset();
+			oldHour = worldTimeHour;
+		}
 
 		// Perform standard updates:
 		UpdateWorldTime ();  

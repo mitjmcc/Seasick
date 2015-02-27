@@ -61,8 +61,16 @@ public class PirateManager : MonoBehaviour
 	}
 
 	public static void pirateJobReset() {
-		foreach (Pirate p in pirates)
+		foreach (Pirate p in pirates) {
+			//p.agent.SetDestination(p.origLocation);
+			if (p.doneJob) {
+				p.gameObject.transform.position = p.origLocation;
+				p.agent.enabled = true;
+				p.lastJob.gameObject.transform.position = p.lastJob.origLocation;
+			}
+			p.returning = true;
 			p.doneJob = false;
+		}
 	}
 
 	public void checkForPirate ()
@@ -76,7 +84,7 @@ public class PirateManager : MonoBehaviour
 			bool hit = Physics.Raycast (Camera.main.ScreenPointToRay (Input.mousePosition), out hitInfo);
 			if (hit) {
 				Debug.Log ("Hit " + hitInfo.transform.gameObject.name);
-				if (hitInfo.transform.gameObject.tag == "Pirates") {
+				if (hitInfo.transform.gameObject.tag == "Pirates" && !hitInfo.transform.gameObject.GetComponent<Pirate>().doneJob) {
 					selector.transform.parent = null;
 					selector.renderer.enabled = true;
 					Pirate currentPirate = hitInfo.transform.gameObject.GetComponent<Pirate>();

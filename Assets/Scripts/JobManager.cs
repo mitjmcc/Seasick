@@ -49,16 +49,29 @@ public class JobManager : MonoBehaviour {
 		foreach (GameObject j in jobObjects) {
 			foreach(GameObject p in PirateManager.getPirateObjects()) {
 				if (j.GetComponent<BoxCollider>().bounds.Intersects(p.GetComponent<BoxCollider>().bounds)
-				    && !p.GetComponent<Pirate>().doneJob) {
+				    && !p.GetComponent<Pirate>().doneJob && p.GetComponent<Pirate>().returning) {
 					j.GetComponent<Job>().doAffect();
 					p.GetComponent<Pirate>().doneJob = true;
-					if (j.GetComponent<Job>().effect < 0)
-						p.GetComponent<Pirate>().updateValues(j.GetComponent<Job>().affectsFood,
-						                                      j.GetComponent<Job>().affectsWater,
-						                                      j.GetComponent<Job>().affectsMorale,
-						                                      j.GetComponent<Job>().effect / 5);
+					updateValues (j.GetComponent<Job>(), p.GetComponent<Pirate>());
+					if (j.GetComponent<Job>().boatJob)
+						boating (j, p);
+					p.GetComponent<Pirate>().lastJob = j.GetComponent<Job>();
 				}
 			}
-		}
+		} 
+	}
+
+	public static void updateValues(Job j, Pirate p) {
+		if (j.effect < 0)
+			p.updateValues(j.GetComponent<Job>().affectsFood,
+              j.GetComponent<Job>().affectsWater,
+              j.GetComponent<Job>().affectsMorale,
+              j.GetComponent<Job>().effect / 5);
+	}
+
+	public static void boating(GameObject j, GameObject p) {
+		j.GetComponent<Transform> ().position = new Vector3 (2.36f, -15.4f, 77.1f);
+		p.GetComponent<Transform> ().position = new Vector3 (2.36f, -15.4f, 77.1f);
+		p.GetComponent<Pirate>().agent.enabled = false;
 	}
 }
