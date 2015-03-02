@@ -15,3 +15,10 @@ http://scrawkblog.com/2013/02/24/ocean-renderer-for-unity/
 
 Not Used, but cool:
 http://www.philipk.net/tutorials/materials/woodrough/woodrough.html
+
+Barrels:
+http://archive3d.net/?a=download&id=4dfc4683
+http://archive3d.net/?a=download&id=bc9323e8
+
+Table:
+http://www.model3d.biz/obj/object.php?did=21&iid=0&oid=300

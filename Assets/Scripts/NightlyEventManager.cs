@@ -20,8 +20,10 @@ public class NightlyEventManager : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Input.GetKeyDown ("return"))
+		if (Input.GetKeyDown ("return")) {
+			Time.timeScale = 1;
 			deactivateEvent ();
+		}
 	}
 
 	public NightlyEvent pickEvent() {
@@ -29,6 +31,7 @@ public class NightlyEventManager : MonoBehaviour {
 	}
 
 	public void activateEvent() {
+		Time.timeScale = 0;
 		lastEvent = pickEvent ();
 		lastEvent.GetComponent<Text> ().enabled = true;
 		currentDay.text = "Day: " + (DayNightController.daysPast + 1);

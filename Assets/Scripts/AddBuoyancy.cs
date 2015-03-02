@@ -12,7 +12,7 @@ public class AddBuoyancy : MonoBehaviour
 
 	void Start() 
 	{
-		//GameObject ocean = GameObject.Find("Ocean");
+		GameObject ocean = GameObject.Find("Ocean");
 		
 		if(ocean == null)
 		{
@@ -45,7 +45,7 @@ public class AddBuoyancy : MonoBehaviour
 			
 			transform.position = pos;
 			
-			//transform.localEulerAngles = new Vector3(-dz*m_tilt,0,dx*m_tilt); Conflict with the camera controls
+			//transform.localEulerAngles = new Vector3(-dz*m_tilt,0,dx*m_tilt);// Conflict with the camera controls
 		}
 	}
 }

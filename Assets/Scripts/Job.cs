@@ -1,33 +1,53 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Job : MonoBehaviour {
-
+public class Job : MonoBehaviour
+{
 	public int effect;
 
 	public bool affectsFood = false;
 	public bool affectsWater = false;
+	public bool affectsMorale = false;
 	public bool affectsWood = false;
+	public bool boatJob = false;
 
-	void Start () {
-	
+	public Vector3 origLocation;
+
+	public double jobLength;
+
+	public Pirate lastPirate;
+
+	void Start ()
+	{
+		origLocation = gameObject.transform.position;
 	}
 
-	void Update () {
-
+	void Update ()
+	{
+		if (isJobDone ())
+			PirateManager.instance.pirateJobReset(lastPirate);
 	}
 
-	public void doAffect() {
+	public void doAffect ()
+	{
 		if (affectsFood) {
-			JobManager.setFood(effect);
-			PirateManager.setHunger(effect);
+			JobManager.setFood (effect);
+			DataValues.instance.setTotalHunger (effect);
+		} else if (affectsWater) {
+			JobManager.setWater (effect);
+			DataValues.instance.setTotalThirst (effect);
+		} else if (affectsMorale) {
+
+		} else if (affectsWood) 
+			JobManager.setWood (effect);
+		DataValues.instance.calculateTotals ();
+	}
+
+	public bool isJobDone() {
+		if (lastPirate != null) {
+			if (DayNightController.GetCurrentTime () > lastPirate.jobStartTime + jobLength)
+				return true;
 		}
-		else if (affectsWater) {
-			JobManager.setWater(effect);
-			PirateManager.setThirst(effect);
-		}
-		else if (affectsWood) 
-			JobManager.setWood(effect);
-		PirateManager.calculateTotals ();
+		return false;
 	}
 }
