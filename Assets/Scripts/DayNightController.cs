@@ -23,10 +23,11 @@ public class DayNightController : MonoBehaviour
 		public float dawnTimeOffset;  
 
 		/// calculated hour of the day, based on the hoursPerDay setting.  
-		public int worldTimeHour;  
+		public static int worldTimeHour;  
 
 		/// calculated minutes of the day, based on the hoursPerDay setting.  
-		public int minutes;  
+		public static int minutes;  
+		
 		private float timePerHour;
 
 		/// The Number of days that have past since the game has been running
@@ -77,7 +78,7 @@ public class DayNightController : MonoBehaviour
 		void Initialize ()
 		{  
 				quarterDay = dayCycleLength * 0.25f;  
-				halfquarterDay = dayCycleLength * 0.125f;  
+				halfquarterDay = dayCycleLength * 0.125f;
 				dawnTime = 0.0f;  
 				dayTime = dawnTime + halfquarterDay;  
 				duskTime = dayTime + quarterDay + halfquarterDay;  
@@ -141,10 +142,10 @@ public class DayNightController : MonoBehaviour
 						Time.timeScale = 1;
 				}
 		
-				if (worldTimeHour > oldHour + 3) {
-						PirateManager.pirateJobReset ();
-						oldHour = worldTimeHour;
-				}
+//				if (worldTimeHour > oldHour + 3) {
+//						PirateManager.instance.pirateJobReset ();
+//						oldHour = worldTimeHour;
+//				}
 
 				// Perform standard updates:
 				UpdateWorldTime ();  
@@ -199,6 +200,10 @@ public class DayNightController : MonoBehaviour
 		{  
 				currentPhase = DayPhase.Dusk;  
 		}  
+
+		public static double GetCurrentTime() {
+			return (double) (worldTimeHour + minutes / 60);
+		}
 
 		/// Sets the currentPhase to Night, ensuring full night color ambient light, and  
 		/// turning off the directional light, if any.  

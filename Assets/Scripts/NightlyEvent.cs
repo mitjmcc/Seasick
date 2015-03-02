@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class NightlyEvent : MonoBehaviour {
 	
 	public int effect;
-	public int baseEffect;
+	private int baseEffect;
 	public int maxVariation;
 
 	public Text description;
@@ -18,26 +18,28 @@ public class NightlyEvent : MonoBehaviour {
 	
 	void Start () {
 		description.enabled = false;
+		baseEffect = effect;
+		if (variation)
+			variate ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (variation)
-			variate ();
+
 	}
 
 	public void doAffect() {
 		if (affectsFood) {
 			JobManager.setFood(effect);
-			PirateManager.setHunger(effect);
+			DataValues.instance.setTotalHunger(effect);
 		}
 		if (affectsWater) {
 			JobManager.setWater(effect);
-			PirateManager.setThirst(effect);
+			DataValues.instance.setTotalThirst(effect);
 		}
 		if (affectsWood) {
 			JobManager.setWood (effect);
-			PirateManager.calculateTotals ();
+			DataValues.instance.calculateTotals ();
 		}
 	}
 

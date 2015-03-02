@@ -60,7 +60,6 @@ public class PauseMenu : MonoBehaviour
 		{
 				fpsarray = new float[Screen.width];
 				Time.timeScale = 1;
-				PauseGame ();
 		}
 	
 		void OnPostRender ()

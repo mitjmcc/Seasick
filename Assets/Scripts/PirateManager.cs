@@ -4,76 +4,75 @@ using UnityEngine.UI;
 
 public class PirateManager : MonoBehaviour
 {
-		private static GameObject[] pirateObjects;
+		private GameObject[] pirateObjects;
 
-		public static int totalHunger = 0;
-		public static int totalThirst = 0;
-		public static int totalMorale = 0;
-		public static ArrayList pirates;
-		public static Pirate lastSelected;
+		public Pirate[] pirates;
+		public Pirate lastSelected;
 		public Sprite[] pirateFaces = new Sprite[5];
 		public GameObject selector;
 
+		public static PirateManager instance { get; private set; }
+		
 		//Initialization
 		void Awake ()
 		{
-				pirates = new ArrayList ();
-				pirateObjects = GameObject.FindGameObjectsWithTag ("Pirates");
-				for (int i = 0; i < pirateObjects.Length; i++)
-						pirates.Add (pirateObjects [i].gameObject.GetComponent ("Pirate"));
+			instance = this;
 
-				calculateTotals ();
+			pirateObjects = GameObject.FindGameObjectsWithTag ("Pirates");
+
+			DataValues.instance.calculateTotals ();
 		}
 
 		void Update ()
 		{
-				checkForPirate ();
+			checkForPirate ();
 		}
 
-		public static void calculateTotals ()
+		public Pirate getSelectedPirate ()
 		{
-				totalHunger = 0;
-				totalThirst = 0;
-				totalMorale = 0;
-				foreach (Pirate e in pirates) {
-						totalHunger += e.hunger;
-						totalThirst += e.thirst;
-						totalMorale += e.morale;
-				}
+			foreach (Pirate e in pirates) {
+				if (e.selected)
+					return e;
+			}
+			return null;
 		}
 
-		public static Pirate getSelectedPirate ()
+		public bool isAPirateSelected ()
 		{
-				foreach (Pirate e in pirates) {
-						if (e.selected)
-								return e;
-				}
-				return null;
+			foreach (Pirate e in pirates) {
+				if (e.selected)
+					return true;
+			}
+			return false;
 		}
 
-		public static bool isAPirateSelected ()
+		public void pirateJobReset ()
 		{
-				foreach (Pirate e in pirates) {
-						if (e.selected)
-								return true;
+			foreach (Pirate p in pirates) {
+				//p.agent.SetDestination(p.origLocation);
+				if (p.doneJob) {
+					p.gameObject.transform.position = p.origLocation;
+					p.agent.enabled = true;
+					p.agent.SetDestination (p.origLocation);
+					p.lastJob.gameObject.transform.position = p.lastJob.origLocation;
 				}
-				return false;
+				p.returning = true;
+				p.doneJob = false;
+			}
 		}
 
-		public static void pirateJobReset ()
-		{
-				foreach (Pirate p in pirates) {
-						//p.agent.SetDestination(p.origLocation);
-						if (p.doneJob) {
-								p.gameObject.transform.position = p.origLocation;
-								p.agent.enabled = true;
-								p.agent.SetDestination (p.origLocation);
-								p.lastJob.gameObject.transform.position = p.lastJob.origLocation;
-						}
-						p.returning = true;
-						p.doneJob = false;
-				}
+	public void pirateJobReset (Pirate p)
+	{
+		//p.agent.SetDestination(p.origLocation);
+		if (p.doneJob) {
+			p.gameObject.transform.position = p.origLocation;
+			p.agent.enabled = true;
+			p.agent.SetDestination (p.origLocation);
+			p.lastJob.gameObject.transform.position = p.lastJob.origLocation;
 		}
+		p.returning = true;
+		p.doneJob = false;
+	}
 
 		public void checkForPirate ()
 		{
@@ -100,26 +99,12 @@ public class PirateManager : MonoBehaviour
 				}
 		}
 
-		public static void setHunger (int effect)
+		public GameObject[] getPirateObjects ()
 		{
-				totalHunger += effect;
-				Debug.Log ("Total Hunger: " + totalHunger);
+			return pirateObjects;
 		}
 
-		public static void setThirst (int effect)
-		{
-				totalThirst += effect;
-				Debug.Log ("Total Thirst: " + totalThirst);
-		}
-
-		public static void setMorale (int effect)
-		{
-				totalMorale += effect;
-				Debug.Log ("Total Morale: " + totalMorale);
-		}
-
-		public static GameObject[] getPirateObjects ()
-		{
-				return pirateObjects;
+		public Pirate[] getPirates() {
+			return pirates;		
 		}
 }
