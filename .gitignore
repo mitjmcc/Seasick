@@ -12,3 +12,4 @@ sysinfo.txt
 *.unityproj
 *.userprefs
 *.sln
+*.cubemap.meta

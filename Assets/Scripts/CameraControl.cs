@@ -11,14 +11,16 @@ public class CameraControl : MonoBehaviour {
 	float vertAxis;
 	float mWheel;
 	int zoomSpeed = 4;
+	int speed = 200;
 	// Use this for initialization
 	void Start () {
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		horizAxis = Input.GetAxis ("Horizontal");
-		vertAxis = Input.GetAxis ("Vertical");
+		horizAxis = Input.GetAxis ("Horizontal") * Time.deltaTime * speed;
+		vertAxis = Input.GetAxis ("Vertical") * Time.deltaTime * speed;
+
 		mWheel = Input.GetAxis ("Mouse ScrollWheel");
 		Vector3 vertTranslate = new Vector3 (0, vertAxis * maxVertSpeed, 0);
 		Vector3 horizTranslate = new Vector3 (horizAxis * maxSpeed, 0, 0);
