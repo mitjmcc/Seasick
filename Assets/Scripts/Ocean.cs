@@ -151,17 +151,17 @@ public class Ocean : MonoBehaviour
 		m_grid = new GameObject("Ocean Grid");
 		m_grid.AddComponent<MeshFilter>();
 		m_grid.AddComponent<MeshRenderer>();
-		m_grid.renderer.material = m_oceanMat;
+		m_grid.GetComponent<Renderer>().material = m_oceanMat;
 		m_grid.GetComponent<MeshFilter>().mesh = mesh;
-		m_grid.transform.localScale = new Vector3(far,1,far); //Make radial grid have a radius equal to far plane
+		m_grid.transform.localScale = new Vector3(far*2,1,far*2); //Make radial grid have a radius equal to far plane
 	
-		m_gridWireframe = new GameObject("Ocean Grid Wireframe");
-		m_gridWireframe.AddComponent<MeshFilter>();
-		m_gridWireframe.AddComponent<MeshRenderer>();
-		m_gridWireframe.renderer.material = m_wireframeMat;
-		m_gridWireframe.GetComponent<MeshFilter>().mesh = mesh;
-		m_gridWireframe.transform.localScale = new Vector3(far,1,far);
-		m_gridWireframe.layer = 8;
+//		m_gridWireframe = new GameObject("Ocean Grid Wireframe");
+//		m_gridWireframe.AddComponent<MeshFilter>();
+//		m_gridWireframe.AddComponent<MeshRenderer>();
+//		m_gridWireframe.GetComponent<Renderer>().material = m_wireframeMat;
+//		m_gridWireframe.GetComponent<MeshFilter>().mesh = mesh;
+//		m_gridWireframe.transform.localScale = new Vector3(far,1,far);
+//		m_gridWireframe.layer = 8;
 		
 		m_oceanMat.SetTexture("_FresnelLookUp", m_fresnelLookUp);
 		m_oceanMat.SetVector("_GridSizes", m_waves.GetGridSizes());
@@ -186,11 +186,11 @@ public class Ocean : MonoBehaviour
 		m_oceanMat.SetTexture("_Map1", m_waves.GetMap1());
 		m_oceanMat.SetTexture("_Map2", m_waves.GetMap2());
 		m_oceanMat.SetVector("_SunDir", m_sun.transform.forward*-1.0f);
-		m_oceanMat.SetVector("_SunColor", m_sun.GetComponent<Light>().light.color);
+		m_oceanMat.SetVector("_SunColor", m_sun.GetComponent<Light>().GetComponent<Light>().color);
 		m_oceanMat.SetFloat("_LodFadeDist", m_lodFadeDist);
 		
-		m_wireframeMat.SetTexture("_Map0", m_waves.GetMap0());
-		m_wireframeMat.SetFloat("_LodFadeDist", m_lodFadeDist);
+//		m_wireframeMat.SetTexture("_Map0", m_waves.GetMap0());
+//		m_wireframeMat.SetFloat("_LodFadeDist", m_lodFadeDist);
 		
 		//This makes sure the grid is always centered were the player is
 //		Vector3 pos = Camera.main.transform.position;

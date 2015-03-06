@@ -73,11 +73,12 @@ public class JobManager : MonoBehaviour
 
 	public static void updateValues (Job j, Pirate p)
 	{
-			if (j.effect < 0)
-					p.updateValues (j.GetComponent<Job> ().affectsFood,
-      	j.GetComponent<Job> ().affectsWater,
-  		j.GetComponent<Job> ().affectsMorale,
-      	j.GetComponent<Job> ().effect / 5);
+		if (j.effect < 0)
+			p.updateValues (j.GetComponent<Job> ().affectsFood,
+      			j.GetComponent<Job> ().affectsWater,
+  				j.GetComponent<Job> ().affectsMorale,
+			    true,
+      			j.GetComponent<Job> ().effect / 5);
 	}
 
 	public static void boating (GameObject j, GameObject p)

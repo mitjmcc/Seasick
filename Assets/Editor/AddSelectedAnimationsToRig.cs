@@ -31,7 +31,7 @@ public class AddSelectedAnimationsToRig : ScriptableWizard
 		
 		foreach (Animation an in objs)
 		{			
-			rig.animation.AddClip(an.clip,an.clip.name);        
+			rig.GetComponent<Animation>().AddClip(an.clip,an.clip.name);        
 		}
 		
 		Selection.activeObject=rig;

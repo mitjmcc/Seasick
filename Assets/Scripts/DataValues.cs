@@ -12,9 +12,9 @@ public class DataValues : MonoBehaviour
 	public int totalWood = 0;
 
 	
-	private int maxHunger = 20;
-	private int maxThirst = 15;
-	private int maxMorale = 50;
+	public int maxHunger = 20;
+	public int maxThirst = 15;
+	public int maxMorale = 50;
 
 	public int defaultDays = 30;
 

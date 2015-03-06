@@ -29,14 +29,14 @@ public class CameraControl : MonoBehaviour {
 		transform.Translate (vertTranslate);
 		transform.LookAt (targetPos);
 		if (mWheel > 0) {
-			camera.fieldOfView = camera.fieldOfView - zoomSpeed;
-			if (camera.fieldOfView <= 40) {
-				camera.fieldOfView = 40;
+			GetComponent<Camera>().fieldOfView = GetComponent<Camera>().fieldOfView - zoomSpeed;
+			if (GetComponent<Camera>().fieldOfView <= 40) {
+				GetComponent<Camera>().fieldOfView = 40;
 			}
 		} else if (mWheel < 0) {
-			camera.fieldOfView = camera.fieldOfView + zoomSpeed;
-			if (camera.fieldOfView >= 85) {
-				camera.fieldOfView = 85;
+			GetComponent<Camera>().fieldOfView = GetComponent<Camera>().fieldOfView + zoomSpeed;
+			if (GetComponent<Camera>().fieldOfView >= 85) {
+				GetComponent<Camera>().fieldOfView = 85;
 			}
 //			Camera.main.fieldOfView = Mathf.Max (Camera.main.fieldOfView + 2, 85.0);
 		}

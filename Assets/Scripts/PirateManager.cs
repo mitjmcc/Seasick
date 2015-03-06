@@ -65,11 +65,13 @@ public class PirateManager : MonoBehaviour
 	{
 		//p.agent.SetDestination(p.origLocation);
 		if (p.doneJob) {
-			p.gameObject.transform.position = p.origLocation;
+			if (p.lastJob.boatJob) 
+				p.gameObject.transform.position = p.origLocation;
 			p.agent.enabled = true;
-			p.agent.SetDestination (p.origLocation);
 			p.lastJob.gameObject.transform.position = p.lastJob.origLocation;
 		}
+		p.anim.SetBool ("walk", false);
+		p.agent.SetDestination (p.origLocation);
 		p.returning = true;
 		p.doneJob = false;
 	}
@@ -79,7 +81,7 @@ public class PirateManager : MonoBehaviour
 				if (Input.GetMouseButtonDown (0)) {
 						foreach (Pirate e in pirates)
 								e.selected = false;
-						selector.renderer.enabled = false;
+						selector.GetComponent<Renderer>().enabled = false;
 						Debug.Log ("Hit nothing");
 						RaycastHit hitInfo = new RaycastHit ();
 						bool hit = Physics.Raycast (Camera.main.ScreenPointToRay (Input.mousePosition), out hitInfo);
@@ -87,7 +89,7 @@ public class PirateManager : MonoBehaviour
 								Debug.Log ("Hit " + hitInfo.transform.gameObject.name);
 								if (hitInfo.transform.gameObject.tag == "Pirates" && !hitInfo.transform.gameObject.GetComponent<Pirate> ().doneJob) {
 										selector.transform.parent = null;
-										selector.renderer.enabled = true;
+										selector.GetComponent<Renderer>().enabled = true;
 										Pirate currentPirate = hitInfo.transform.gameObject.GetComponent<Pirate> ();
 										currentPirate.selected = true;
 										currentPirate.say (0);

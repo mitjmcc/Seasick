@@ -71,9 +71,6 @@ public class DayNightController : MonoBehaviour
 		// blend value of skybox using SkyBoxBlend Shader in render settings range 0-1  
 		private float SkyboxBlendFactor = 0.0f; 
 
-		//Storing the previous hour
-		private int oldHour;
-
 		/// Initializes working variables and performs starting calculations.  
 		void Initialize ()
 		{  
@@ -84,10 +81,9 @@ public class DayNightController : MonoBehaviour
 				duskTime = dayTime + quarterDay + halfquarterDay;  
 				nightTime = duskTime + halfquarterDay;  
 				timePerHour = dayCycleLength / hoursPerDay;  
-				if (light != null) {
-						lightIntensity = light.intensity;
+				if (GetComponent<Light>() != null) {
+						lightIntensity = GetComponent<Light>().intensity;
 				}
-				oldHour = worldTimeHour;
 		}  
 
 		/// Sets the script control fields to reasonable default values for an acceptable day/night cycle effect.  
@@ -111,14 +107,14 @@ public class DayNightController : MonoBehaviour
 
 		void OnGUI ()
 		{  
-				string jam = worldTimeHour.ToString ();  
-				string menit = minutes.ToString ();  
-				if (worldTimeHour < 10) {  
-						jam = "0" + worldTimeHour;  
-				}  
-				if (minutes < 10) {  
-						menit = "0" + minutes;  
-				}
+//				string jam = worldTimeHour.ToString ();  
+//				string menit = minutes.ToString ();  
+//				if (worldTimeHour < 10) {  
+//						jam = "0" + worldTimeHour;  
+//				}  
+//				if (minutes < 10) {  
+//						menit = "0" + minutes;  
+//				}
 				//Display the time digitally in a GUI Button
 				//GUI.Button (new Rect (500, 20, 100, 26), currentPhase.ToString () + " : " + jam + ":" + menit);  
 		}  
@@ -178,8 +174,8 @@ public class DayNightController : MonoBehaviour
 		/// Sets the currentPhase to Dawn, turning on the directional light, if any.  
 		public void SetDawn ()
 		{  
-				if (light != null) {
-						light.enabled = true;
+				if (GetComponent<Light>() != null) {
+						GetComponent<Light>().enabled = true;
 				}  
 				currentPhase = DayPhase.Dawn;  
 		}  
@@ -189,8 +185,8 @@ public class DayNightController : MonoBehaviour
 		public void SetDay ()
 		{  
 				RenderSettings.ambientLight = fullLight;  
-				if (light != null) {
-						light.intensity = lightIntensity;
+				if (GetComponent<Light>() != null) {
+						GetComponent<Light>().intensity = lightIntensity;
 				}  
 				currentPhase = DayPhase.Day;  
 		}  
@@ -210,8 +206,8 @@ public class DayNightController : MonoBehaviour
 		public void SetNight ()
 		{  
 				RenderSettings.ambientLight = fullDark;  
-				if (light != null) {
-						light.enabled = false;
+				if (GetComponent<Light>() != null) {
+						GetComponent<Light>().enabled = false;
 				}  
 				currentPhase = DayPhase.Night;  
 		}  
@@ -225,14 +221,14 @@ public class DayNightController : MonoBehaviour
 				if (currentPhase == DayPhase.Dawn) {  
 						float relativeTime = currentCycleTime - dawnTime;  
 						RenderSettings.ambientLight = Color.Lerp (fullDark, fullLight, relativeTime / halfquarterDay);  
-						if (light != null) {
-								light.intensity = lightIntensity * (relativeTime / halfquarterDay);
+						if (GetComponent<Light>() != null) {
+								GetComponent<Light>().intensity = lightIntensity * (relativeTime / halfquarterDay);
 						}  
 				} else if (currentPhase == DayPhase.Dusk) {  
 						float relativeTime = currentCycleTime - duskTime;  
 						RenderSettings.ambientLight = Color.Lerp (fullLight, fullDark, relativeTime / halfquarterDay);  
-						if (light != null) {
-								light.intensity = lightIntensity * ((halfquarterDay - relativeTime) / halfquarterDay);
+						if (GetComponent<Light>() != null) {
+								GetComponent<Light>().intensity = lightIntensity * ((halfquarterDay - relativeTime) / halfquarterDay);
 						}  
 				}  
 

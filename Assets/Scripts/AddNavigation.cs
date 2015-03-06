@@ -4,8 +4,9 @@ using System.Collections;
 public class AddNavigation : MonoBehaviour {
 	
 	public Vector3 mouseLocation;
-	private NavMeshAgent agent;
+	public Transform trans;
 
+	private NavMeshAgent agent;
 
 	void Start () {
 		agent = gameObject.GetComponent<NavMeshAgent>();
@@ -13,6 +14,7 @@ public class AddNavigation : MonoBehaviour {
 	}
 
 	void Update () {
+
 
 		//Locate Cursor
 		mouseLocation = Input.mousePosition;
@@ -24,8 +26,12 @@ public class AddNavigation : MonoBehaviour {
 			float hitDist = 0.0f;
 			playerPlane.Raycast(ray, out hitDist);
 			Vector3 targetPoint = ray.GetPoint(hitDist);
+			agent.enabled = true;
+			agent.updatePosition = true;
+			agent.updateRotation = true;
 			agent.SetDestination(targetPoint);
 			gameObject.gameObject.GetComponent<Pirate>().say (1);
+
 		}
 	}
 }

@@ -53,7 +53,7 @@ public class PauseMenu : MonoBehaviour
 		private float fps;
 	
 		private int toolbarInt = 0;
-		private string[]  toolbarstrings = {"Audio","Graphics","Stats","System"};
+		private string[] toolbarstrings = {"Audio","Graphics","Stats","System"};
 	
 	
 		void Start ()
@@ -371,7 +371,7 @@ public class PauseMenu : MonoBehaviour
 				currentPage = Page.None;
 		
 				if (IsBeginning () && start != null) {
-						start.active = true;
+					start.SetActive(true);
 				}
 		}
 	
