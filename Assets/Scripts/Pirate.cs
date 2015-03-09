@@ -20,7 +20,6 @@ public class Pirate : MonoBehaviour
 
 	public bool selected = false;
 	public bool doneJob = false;
-	public bool returning = false;
 
 	public Job lastJob;
 	public double jobStartTime;
@@ -60,10 +59,7 @@ public class Pirate : MonoBehaviour
 
 		if (selected) {
 			updateUI ();
-		}
-
-		if (curLocation == origLocation)
-			returning = false;
+		}	
 
 		HungerAndThirst ();
 
@@ -72,7 +68,7 @@ public class Pirate : MonoBehaviour
 
 	private void HungerAndThirst() {
 		if (DayNightController.minutes == 59 && DayNightController.worldTimeHour % 3 == 0)
-			updateValues(true, true, false, false, 1);
+			updateValues(true, true, false, false, -1);
 	}
 
 	public void say (int audioIndex)

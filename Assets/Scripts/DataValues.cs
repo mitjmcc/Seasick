@@ -10,13 +10,13 @@ public class DataValues : MonoBehaviour
 	public int totalFood = 200;
 	public int totalWater = 200;
 	public int totalWood = 0;
-
 	
 	public int maxHunger = 20;
 	public int maxThirst = 15;
 	public int maxMorale = 50;
+	public int maxRepair = 30;
 
-	public int defaultDays = 30;
+	public int defaultDays = 10;
 
 	public static DataValues instance { get; private set; }
 

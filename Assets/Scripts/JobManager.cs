@@ -9,7 +9,7 @@ public class JobManager : MonoBehaviour
 	public static int totalFood = 200;
 	public static int totalWater = 200;
 	public static int totalWood = 0;
-	public static int defaultDays = 30;
+	public static int defaultDays = 15;
 	public static ArrayList jobs;
 
 	void Awake ()
@@ -65,6 +65,7 @@ public class JobManager : MonoBehaviour
 					updateValues (j.GetComponent<Job> (), p.GetComponent<Pirate> ());
 					if (j.GetComponent<Job> ().boatJob)
 						boating (j, p);
+					p.GetComponent<Pirate> ().agent.enabled = false;
 					p.GetComponent<Pirate> ().lastJob = j.GetComponent<Job> ();
 				}
 			}
@@ -77,14 +78,13 @@ public class JobManager : MonoBehaviour
 			p.updateValues (j.GetComponent<Job> ().affectsFood,
       			j.GetComponent<Job> ().affectsWater,
   				j.GetComponent<Job> ().affectsMorale,
-			    true,
-      			j.GetComponent<Job> ().effect / 5);
+			    false,
+      			j.GetComponent<Job> ().effect / -5);
 	}
 
 	public static void boating (GameObject j, GameObject p)
 	{
 		j.GetComponent<Transform> ().position = new Vector3 (2.36f, -15.4f, 77.1f);
 		p.GetComponent<Transform> ().position = new Vector3 (2.36f, -15.4f, 77.1f);
-		p.GetComponent<Pirate> ().agent.enabled = false;
 	}
 }
