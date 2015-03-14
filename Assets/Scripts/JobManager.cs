@@ -6,10 +6,6 @@ public class JobManager : MonoBehaviour
 
 	private static GameObject[] jobObjects;
 
-	public static int totalFood = 200;
-	public static int totalWater = 200;
-	public static int totalWood = 0;
-	public static int defaultDays = 15;
 	public static ArrayList jobs;
 
 	void Awake ()
@@ -29,24 +25,6 @@ public class JobManager : MonoBehaviour
 	{
 			//TODO: Call this function at the beginning of each day
 
-	}
-
-	public static void setFood (int effect)
-	{
-			totalFood += effect;
-			Debug.Log (totalFood);
-	}
-
-	public static void setWater (int effect)
-	{
-			totalWater += effect;
-			Debug.Log (totalWater);
-	}
-
-	public static void setWood (int effect)
-	{
-			totalWood += effect;
-			Debug.Log (totalWood);
 	}
 
 	///Go through all Jobs and all pirates and checks for an intersection
