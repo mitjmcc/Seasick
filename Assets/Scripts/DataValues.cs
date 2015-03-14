@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class DataValues : MonoBehaviour
@@ -11,12 +11,14 @@ public class DataValues : MonoBehaviour
 	public int totalWater = 200;
 	public int totalWood = 0;
 
+	public float repair;
 	
 	public int maxHunger = 20;
 	public int maxThirst = 15;
 	public int maxMorale = 50;
+	public int maxRepair = 30;
 
-	public int defaultDays = 30;
+	public int defaultDays;
 
 	public static DataValues instance { get; private set; }
 
@@ -46,19 +48,41 @@ public class DataValues : MonoBehaviour
 	public void setTotalHunger (int effect)
 	{
 		totalHunger += effect;
-		Debug.Log ("Total Hunger: " + totalHunger);
+//		Debug.Log ("Total Hunger: " + totalHunger);
 	}
 	
 	public void setTotalThirst (int effect)
 	{
 		totalThirst += effect;
-		Debug.Log ("Total Thirst: " + totalThirst);
+//		Debug.Log ("Total Thirst: " + totalThirst);
 	}
 	
 	public void setTotalMorale (int effect)
 	{
 		totalMorale += effect;
-		Debug.Log ("Total Morale: " + totalMorale);
+//		Debug.Log ("Total Morale: " + totalMorale);
+	}
+
+	public void setFood (int effect)
+	{
+		totalFood += effect;
+//		Debug.Log (totalFood);
+	}
+	
+	public void setWater (int effect)
+	{
+		totalWater += effect;
+//		Debug.Log (totalWater);
+	}
+	
+	public void setWood (int effect)
+	{
+		totalWood += effect;
+//		Debug.Log (totalWood);
+	}
+
+	public void setRepair (int effect) {
+		repair += effect;
 	}
 	
 	public int getMaxHunger ()

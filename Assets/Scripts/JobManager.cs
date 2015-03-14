@@ -6,10 +6,6 @@ public class JobManager : MonoBehaviour
 
 	private static GameObject[] jobObjects;
 
-	public static int totalFood = 200;
-	public static int totalWater = 200;
-	public static int totalWood = 0;
-	public static int defaultDays = 30;
 	public static ArrayList jobs;
 
 	void Awake ()
@@ -31,24 +27,6 @@ public class JobManager : MonoBehaviour
 
 	}
 
-	public static void setFood (int effect)
-	{
-			totalFood += effect;
-			Debug.Log (totalFood);
-	}
-
-	public static void setWater (int effect)
-	{
-			totalWater += effect;
-			Debug.Log (totalWater);
-	}
-
-	public static void setWood (int effect)
-	{
-			totalWood += effect;
-			Debug.Log (totalWood);
-	}
-
 	///Go through all Jobs and all pirates and checks for an intersection
 	///If there is an intersection it will call doAffect which increases/decreases the appopriate stat
 	///I think it calls do affect multiple times, so that needs to be sorted out.
@@ -65,6 +43,7 @@ public class JobManager : MonoBehaviour
 					updateValues (j.GetComponent<Job> (), p.GetComponent<Pirate> ());
 					if (j.GetComponent<Job> ().boatJob)
 						boating (j, p);
+					p.GetComponent<Pirate> ().agent.enabled = false;
 					p.GetComponent<Pirate> ().lastJob = j.GetComponent<Job> ();
 				}
 			}
@@ -77,14 +56,13 @@ public class JobManager : MonoBehaviour
 			p.updateValues (j.GetComponent<Job> ().affectsFood,
       			j.GetComponent<Job> ().affectsWater,
   				j.GetComponent<Job> ().affectsMorale,
-			    true,
-      			j.GetComponent<Job> ().effect / 5);
+			    false,
+      			j.GetComponent<Job> ().effect / -5);
 	}
 
 	public static void boating (GameObject j, GameObject p)
 	{
 		j.GetComponent<Transform> ().position = new Vector3 (2.36f, -15.4f, 77.1f);
 		p.GetComponent<Transform> ().position = new Vector3 (2.36f, -15.4f, 77.1f);
-		p.GetComponent<Pirate> ().agent.enabled = false;
 	}
 }

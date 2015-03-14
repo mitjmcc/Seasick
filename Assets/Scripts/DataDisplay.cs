@@ -21,10 +21,10 @@ public class DataDisplay : MonoBehaviour
 
 	private void updateText ()
 	{
-		textValues [0].text = "Food: " + JobManager.totalFood;
-		textValues [1].text = "Water: " + JobManager.totalWater;
+		textValues [0].text = "Food: " + DataValues.instance.totalFood;
+		textValues [1].text = "Water: " + DataValues.instance.totalWater;
 		textValues [2].text = "Morale: " + DataValues.instance.totalMorale;
-		textValues [3].text = "Days Left: " + (JobManager.defaultDays - DayNightController.daysPast);
-		textValues [4].text = "Wood: " + JobManager.totalWood;
+		textValues [3].text = "Days Left: " + (DataValues.instance.defaultDays - DayNightController.daysPast);
+		textValues [4].text = "Wood: " + DataValues.instance.totalWood;
 	}	
 }

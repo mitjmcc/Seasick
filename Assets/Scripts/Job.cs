@@ -9,6 +9,7 @@ public class Job : MonoBehaviour
 	public bool affectsWater = false;
 	public bool affectsMorale = false;
 	public bool affectsWood = false;
+	public bool affectsRepair = false;
 	public bool boatJob = false;
 
 	public Vector3 origLocation;
@@ -31,15 +32,18 @@ public class Job : MonoBehaviour
 	public void doAffect ()
 	{
 		if (affectsFood) {
-			JobManager.setFood (effect);
+			DataValues.instance.setFood (effect);
 			DataValues.instance.setTotalHunger (effect);
 		} else if (affectsWater) {
-			JobManager.setWater (effect);
+			DataValues.instance.setWater (effect);
 			DataValues.instance.setTotalThirst (effect);
 		} else if (affectsMorale) {
 
 		} else if (affectsWood) 
-			JobManager.setWood (effect);
+			DataValues.instance.setWood (effect);
+		if (affectsRepair) {
+			DataValues.instance.setRepair(-effect);
+		}
 		DataValues.instance.calculateTotals ();
 	}
 

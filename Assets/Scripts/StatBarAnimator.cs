@@ -22,9 +22,9 @@ public class StatBarAnimator : MonoBehaviour
 		maxHunger = DataValues.instance.getMaxHunger ();
 		maxThirst = DataValues.instance.getMaxThirst ();
 		maxMorale = DataValues.instance.getMaxMorale ();
-		hunger = maxHunger;
-		thirst = maxThirst;
-		morale = maxMorale;
+		hunger = 0;
+		thirst = 0;
+		morale = 0;
 		happiness = 1;
 		displays = new ArrayList ();
 		foreach (GameObject g in GameObject.FindGameObjectsWithTag ("CharacterDisplay")) {

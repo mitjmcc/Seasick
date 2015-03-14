@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ClockAnimator : MonoBehaviour
@@ -11,6 +11,7 @@ public class ClockAnimator : MonoBehaviour
 	
 	void Start ()
 	{
+		
 	}
 
 	// Update is called once per frame

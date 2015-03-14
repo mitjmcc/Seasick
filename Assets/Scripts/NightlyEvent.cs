@@ -30,15 +30,15 @@ public class NightlyEvent : MonoBehaviour {
 
 	public void doAffect() {
 		if (affectsFood) {
-			JobManager.setFood(effect);
+			DataValues.instance.setFood(effect);
 			DataValues.instance.setTotalHunger(effect);
 		}
 		if (affectsWater) {
-			JobManager.setWater(effect);
+			DataValues.instance.setWater(effect);
 			DataValues.instance.setTotalThirst(effect);
 		}
 		if (affectsWood) {
-			JobManager.setWood (effect);
+			DataValues.instance.setWood (effect);
 			DataValues.instance.calculateTotals ();
 		}
 	}
