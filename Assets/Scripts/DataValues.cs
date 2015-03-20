@@ -1,5 +1,9 @@
 using UnityEngine;
 using System.Collections;
+using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+
 
 public class DataValues : MonoBehaviour
 {
@@ -31,6 +35,80 @@ public class DataValues : MonoBehaviour
 	void Update ()
 	{
 
+	}
+
+	public void Save() 
+	{
+		BinaryFormatter bf = new BinaryFormatter ();
+		FileStream file = File.Create 
+			(Application.persistentDataPath + "/dataValues.dat");
+
+		SeasickData data = new SeasickData ();
+
+		data.curDays = DayNightController.daysPast;
+		data.totalFood = totalFood;
+		data.totalWater = totalWater;
+		data.totalWood = totalWood;
+		data.repair = repair;
+
+		bf.Serialize (file, data);
+		file.Close();
+
+		int i = 1;		
+//		foreach (Pirate p in PirateManager.instance.pirates) {
+//			file = File.Create 
+//				(Application.persistentDataPath + "/Pirates/pirate" + i + ".dat");
+//
+//			PirateData pData = new PirateData();
+//
+//			pData.hunger = p.hunger;
+//			pData.morale = p.morale;
+//			pData.name = p.name;
+//			pData.curLocation = p.curLocation;
+//			pData.thirst = p.thirst;
+//
+//			bf.Serialize(file, data);
+//			file.Close();
+//			i++;
+//		}
+	}
+
+	public void Load()
+	{
+		if (File.Exists (Application.persistentDataPath +
+			"/dataValues.dat")) {
+			BinaryFormatter bf = new BinaryFormatter ();
+			FileStream file = File.Open(Application.persistentDataPath + "/dataValues.dat", 
+				 FileMode.Open);
+			SeasickData data = (SeasickData) bf.Deserialize(file);
+			file.Close ();
+
+			DayNightController.daysPast = data.curDays;
+			totalFood = data.totalFood;
+			totalWater = data.totalWater;
+			totalWood = data.totalWood;
+			repair = data.repair;
+		}
+
+//		int i = 1;
+//		foreach (Pirate p in PirateManager.instance.pirates) {
+//			if(File.Exists(Application.persistentDataPath + "/Pirates/pirate" + i + ".dat")) 
+//			{
+//				BinaryFormatter bf = new BinaryFormatter ();
+//				FileStream file = File.Open 
+//					(Application.persistentDataPath + "/Pirates/pirate" + i + ".dat",
+//					FileMode.Open);
+//				PirateData pData = (PirateData) bf.Deserialize(file);
+//				file.Close();
+//
+//				p.hunger = pData.hunger;
+//				p.morale = pData.morale;
+//				p.name = pData.name;
+//				p.transform.position = pData.curLocation;
+//				p.thirst = pData.thirst;
+//			}
+//			i++;
+//		}
 	}
 
 	public void calculateTotals ()
@@ -99,4 +177,32 @@ public class DataValues : MonoBehaviour
 	{
 		return maxMorale;
 	}
+}
+
+[Serializable]
+class SeasickData
+{
+	public int totalFood;
+	public int totalWater;
+	public int totalWood;
+
+	public float repair;
+
+	public int curDays;
+
+	public SeasickData() {
+
+	}
+}
+
+[Serializable]
+class PirateData 
+{
+	public int hunger;
+	public int thirst;
+	public int morale;	
+
+	public String name;
+
+	public Vector3 curLocation;
 }
