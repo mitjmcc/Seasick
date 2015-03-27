@@ -26,6 +26,7 @@ public class PirateManager : MonoBehaviour
 	void Update ()
 	{
 		checkForPirate ();
+		DataValues.instance.calculateTotals ();
 	}
 
 	public Pirate getSelectedPirate ()

@@ -6,13 +6,13 @@ public class Pirate : MonoBehaviour
 {
 	public NavMeshAgent agent;
 
-	public int hunger;
-	public int thirst;
-	public int morale;
+	public float hunger;
+	public float thirst;
+	public float morale;
 
-	private int maxHunger;
-	private int maxThirst;
-	private int maxMorale;
+	private float maxHunger;
+	private float maxThirst;
+	private float maxMorale;
 
 	public Vector3 origLocation;
 	public Vector3 curLocation;
@@ -24,9 +24,13 @@ public class Pirate : MonoBehaviour
 	public Job lastJob;
 	public double jobStartTime;
 
+	public string name;
+
 	public AudioClip[] pirateSpeechClips;
 
 	public Animator anim;
+
+	private GameObject statAnimator;
 
 	//Initialization
 	void Start ()
@@ -34,14 +38,15 @@ public class Pirate : MonoBehaviour
 		maxHunger = DataValues.instance.getMaxHunger ();
 		maxThirst = DataValues.instance.getMaxThirst ();
 		maxMorale = DataValues.instance.getMaxMorale ();
-		hunger = maxHunger;
-		thirst = maxThirst;
-		morale = maxMorale;
+		hunger = (int) maxHunger;
+		thirst = (int) maxThirst;
+		morale = (int) maxMorale;
 		agent = gameObject.GetComponent<NavMeshAgent> ();
 		origLocation = gameObject.transform.position;
 		curLocation = gameObject.transform.position;
 		lastLocation = gameObject.transform.position;
 		anim = gameObject.GetComponent<Animator> ();
+		statAnimator = GameObject.Find ("StatBars");
 	}
 
 	void Update ()
@@ -67,8 +72,11 @@ public class Pirate : MonoBehaviour
 	}
 
 	private void HungerAndThirst() {
-		if (DayNightController.minutes == 59 && DayNightController.worldTimeHour % 3 == 0)
-			updateValues(true, true, false, false, -1);
+		if (DayNightController.minutes == 59 && DayNightController.worldTimeHour % 1 == 0) {
+			updateValues (true, true, false, false, -1);
+			if (hunger <= 0 || thirst <= 0)
+				updateValues(false, false, true, false, -1);
+		}
 	}
 
 	public void say (int audioIndex)
@@ -82,22 +90,22 @@ public class Pirate : MonoBehaviour
 
 	public void updateUI ()
 	{
-		GameObject.Find ("StatBars").GetComponent<StatBarAnimator> ().changeHunger (hunger);
-		GameObject.Find ("StatBars").GetComponent<StatBarAnimator> ().changeThirst (thirst);
-		GameObject.Find ("StatBars").GetComponent<StatBarAnimator> ().changeMorale (morale);
-		Sprite [] pirateFaces = GameObject.Find ("PirateManager").GetComponent<PirateManager> ().pirateFaces;
-		GameObject.Find ("StatBars").GetComponent<StatBarAnimator> ().changeFaces (pirateFaces);
+		statAnimator.GetComponent<StatBarAnimator> ().changeHunger (hunger);
+		statAnimator.GetComponent<StatBarAnimator> ().changeThirst (thirst);
+		statAnimator.GetComponent<StatBarAnimator> ().changeMorale (morale);
+		//Sprite [] pirateFaces = GameObject.Find ("PirateManager").GetComponent<PirateManager> ().pirateFaces;
+		//GameObject.Find ("StatBars").GetComponent<StatBarAnimator> ().changeFaces (pirateFaces);
 	}
 
-	public void updateValues (bool h, bool t, bool m, bool reset, int delta)
+	public void updateValues (bool h, bool t, bool m, bool reset, float delta)
 	{
 		if (h) {
 			if (hunger + delta <= 0)
 				hunger = 0;
 			else if (hunger + delta >= maxHunger)
-				hunger = maxHunger;
+				hunger = (int) maxHunger;
 			else if (reset)
-				hunger = maxHunger;
+				hunger = (int) maxHunger;
 			else
 				hunger = hunger + delta;
 		}

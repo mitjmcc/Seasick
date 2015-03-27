@@ -14,6 +14,9 @@ public class ConditionManager : MonoBehaviour {
 	public int oldDay;
 	public int dayOfReckoning = 7;
 
+	public string GOMessage1 = "The Royal Navy has arrived and you did not rebuild the ship!";
+	public string GOMessage2 = "Your crew has decided to mutiny!";
+
 	public Material[] mastParts;
 
 	public static ConditionManager instance { get; private set; }
@@ -60,8 +63,14 @@ public class ConditionManager : MonoBehaviour {
 	}
 
 	public void checkGameOver() {
-		if (anyDaysLeft () || checkMorale ())
+		bool day = anyDaysLeft ();
+		bool mutiny = checkMorale ();
+		if ( day || mutiny)
 			gameover = true;
+		if (day)
+			Debug.Log (GOMessage1);
+		if (mutiny)
+			Debug.Log (GOMessage2);
 	}
 
 	public void shipsAppear() {

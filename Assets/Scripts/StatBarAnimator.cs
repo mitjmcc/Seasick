@@ -4,15 +4,15 @@ using UnityEngine.UI;
 
 public class StatBarAnimator : MonoBehaviour
 {
-	private int hunger;
-	private int thirst;
-	private int morale;
-	private int maxHunger;
-	private int maxThirst;
-	private int maxMorale;
+	private float hunger;
+	private float thirst;
+	private float morale;
+	private float maxHunger;
+	private float maxThirst;
+	private float maxMorale;
 	private float happiness; // causes background color of portrait to change. Ranges from -1 to 1;
 	private Image portrait; 
-	private ArrayList displays;
+	public Image[] displays;
 	public Sprite[] faces;
 
 	// Use this for initialization
@@ -25,28 +25,26 @@ public class StatBarAnimator : MonoBehaviour
 		thirst = 0;
 		morale = 0;
 		happiness = 1;
-		displays = new ArrayList ();
-		foreach (GameObject g in GameObject.FindGameObjectsWithTag ("CharacterDisplay")) {
-			g.GetComponent<Image> ().enabled = false;
-			displays.Add (g.GetComponent<Image> ());
-		}
-		portrait = GameObject.Find ("PirateFace").GetComponent<Image> ();
-		portrait.enabled = false;
+//		displays = new ArrayList ();
+//		foreach (GameObject g in GameObject.FindGameObjectsWithTag ("CharacterDisplay")) {
+//			g.GetComponent<Image> ().enabled = false;
+//			displays.Add (g.GetComponent<Image> ());
+//		}
+		//portrait = GameObject.Find ("PirateFace").GetComponent<Image> ();
+		//portrait.enabled = false;
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
-		updateBgColor ();
-
 		if (!(PirateManager.instance.isAPirateSelected ())) {
 			toggleCharacterGUI (false);
-			portrait.enabled = false;
+//			portrait.enabled = false;
 		} else {
-			portrait.enabled = true;
+//			portrait.enabled = true;
 			toggleCharacterGUI (true);
 			updateBars();
-			changePortrait ();
+			//changePortrait ();
 			//Debug.Log ("Happiness: " + happiness);
 		}
 
@@ -54,15 +52,15 @@ public class StatBarAnimator : MonoBehaviour
 	}
 
 	private void updateBars() {
-		if (hunger != PirateManager.instance.getSelectedPirate ().hunger)
-			GameObject.Find ("HungerBar").GetComponent<Image> ().fillAmount = ((float) 
-           (maxHunger - PirateManager.instance.getSelectedPirate ().hunger) / maxHunger);
-		if (thirst != PirateManager.instance.getSelectedPirate ().thirst)
-			GameObject.Find ("ThirstBar").GetComponent<Image> ().fillAmount = ((float) 
-           (maxThirst - PirateManager.instance.getSelectedPirate ().thirst) / maxThirst);
-		if (morale != PirateManager.instance.getSelectedPirate ().morale)
-			GameObject.Find ("MoraleBar").GetComponent<Image> ().fillAmount = ((float) 
-           (maxMorale - PirateManager.instance.getSelectedPirate ().morale) / maxMorale);
+		//if (hunger != PirateManager.instance.getSelectedPirate ().hunger)
+		displays[0].fillAmount = ((float) 
+           (PirateManager.instance.getSelectedPirate ().hunger) / maxHunger);
+		//if (thirst != PirateManager.instance.getSelectedPirate ().thirst)
+			displays[1].fillAmount = ((float) 
+           (PirateManager.instance.getSelectedPirate ().thirst) / maxThirst);
+		//if (morale != PirateManager.instance.getSelectedPirate ().morale)
+			displays[2].fillAmount = ((float) 
+           (PirateManager.instance.getSelectedPirate ().morale) / maxMorale);
 	}
 
 	private void updateBgColor ()
@@ -80,17 +78,17 @@ public class StatBarAnimator : MonoBehaviour
 		}
 	}
 
-	public void changeHunger (int amount)
+	public void changeHunger (float amount)
 	{
 		hunger = amount;
 	}
 
-	public void changeThirst (int amount)
+	public void changeThirst (float amount)
 	{
 		thirst = amount;
 	}
 
-	public void changeMorale (int amount)
+	public void changeMorale (float amount)
 	{
 		morale = amount;
 	}
@@ -119,7 +117,7 @@ public class StatBarAnimator : MonoBehaviour
 
 	public void toggleCharacterGUI (bool b)
 	{
-		foreach (Image i in displays)
-			i.enabled = b;
+		foreach (GameObject i in GameObject.FindGameObjectsWithTag ("CharacterDisplay"))
+			i.GetComponent<Image> ().enabled = b;
 	}
 }

@@ -7,20 +7,23 @@ using System.IO;
 
 public class DataValues : MonoBehaviour
 {
-	public int totalHunger = 0;
-	public int totalThirst = 0;
-	public int totalMorale = 0;
+	public float totalHunger = 0;
+	public float totalThirst = 0;
+	public float totalMorale = 0;
 
-	public int totalFood = 200;
-	public int totalWater = 200;
-	public int totalWood = 0;
+	public float totalFood = 200;
+	public float totalWater = 200;
+	public float totalWood = 0;
 
 	public float repair;
 	
-	public int maxHunger = 20;
-	public int maxThirst = 15;
-	public int maxMorale = 50;
-	public int maxRepair = 30;
+	public float maxHunger = 20;
+	public float maxThirst = 15;
+	public float maxMorale = 50;
+	public float maxRepair = 30;
+	public float maxFood = 500;
+	public float maxWater = 500;
+	public float maxWood = 500;
 
 	public int defaultDays;
 
@@ -163,17 +166,17 @@ public class DataValues : MonoBehaviour
 		repair += effect;
 	}
 	
-	public int getMaxHunger ()
+	public float getMaxHunger ()
 	{
 		return maxHunger;
 	}
 	
-	public int getMaxThirst ()
+	public float getMaxThirst ()
 	{
 		return maxThirst;
 	}
 	
-	public int getMaxMorale ()
+	public float getMaxMorale ()
 	{
 		return maxMorale;
 	}
@@ -182,9 +185,9 @@ public class DataValues : MonoBehaviour
 [Serializable]
 class SeasickData
 {
-	public int totalFood;
-	public int totalWater;
-	public int totalWood;
+	public float totalFood;
+	public float totalWater;
+	public float totalWood;
 
 	public float repair;
 
@@ -198,9 +201,9 @@ class SeasickData
 [Serializable]
 class PirateData 
 {
-	public int hunger;
-	public int thirst;
-	public int morale;	
+	public float hunger;
+	public float thirst;
+	public float morale;	
 
 	public String name;
 

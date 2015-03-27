@@ -7,6 +7,7 @@ public class CameraControl : MonoBehaviour {
 	public float maxSpeed;
 	public float maxVertSpeed;
 	public float maxDistance;
+	public bool mouseControl;
 	float horizAxis;
 	float vertAxis;
 	float mWheel;
@@ -21,15 +22,15 @@ public class CameraControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!DayNightController.DayPhase.Night.Equals(DayNightController.GetCurrentPhase())) {
-			if ((Input.mousePosition.x >= Screen.width - mDelta))
+			if ((Input.mousePosition.x >= Screen.width - mDelta) && mouseControl)
 				horizAxis = Time.deltaTime * speed;
-			else if (Input.mousePosition.x <= mDelta)
+			else if (Input.mousePosition.x <= mDelta && mouseControl)
 				horizAxis = -1 * Time.deltaTime * speed;
 			else
 				horizAxis = Input.GetAxis ("Horizontal") * Time.deltaTime * speed;
-			if ((Input.mousePosition.y >= Screen.height - mDelta))
+			if ((Input.mousePosition.y >= Screen.height - mDelta)&& mouseControl)
 				vertAxis = Time.deltaTime * speed;
-			else if (Input.mousePosition.y <= mDelta)
+			else if (Input.mousePosition.y <= mDelta&& mouseControl)
 				vertAxis = -1 * Time.deltaTime * speed;
 			else
 				vertAxis = Input.GetAxis ("Vertical") * Time.deltaTime * speed;

@@ -21,8 +21,8 @@ public class LoadingScreen : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown ("space"))
-			StartCoroutine (DisplayLoadingScreen ());
+		//if (Input.GetKeyDown ("space"))
+		//	StartCoroutine (DisplayLoadingScreen ());
 	}
 
 	IEnumerator DisplayLoadingScreen() {
