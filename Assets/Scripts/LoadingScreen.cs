@@ -25,7 +25,7 @@ public class LoadingScreen : MonoBehaviour {
 		//	StartCoroutine (DisplayLoadingScreen ());
 	}
 
-	IEnumerator DisplayLoadingScreen() {
+	public IEnumerator DisplayLoadingScreen(string SceneToLoad) {
 		background.SetActive (true);
 		bar.SetActive (true);
 

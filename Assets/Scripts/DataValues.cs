@@ -7,23 +7,23 @@ using System.IO;
 
 public class DataValues : MonoBehaviour
 {
-	public float totalHunger = 0;
-	public float totalThirst = 0;
-	public float totalMorale = 0;
+	public float totalHunger = 0f;
+	public float totalThirst = 0f;
+	public float totalMorale = 0f;
 
-	public float totalFood = 200;
-	public float totalWater = 200;
-	public float totalWood = 0;
+	public float totalFood = 200f;
+	public float totalWater = 200f;
+	public float totalWood = 0f;
 
-	public float repair;
+	public float repair = 0f;
 	
-	public float maxHunger = 20;
-	public float maxThirst = 15;
-	public float maxMorale = 50;
-	public float maxRepair = 30;
-	public float maxFood = 500;
-	public float maxWater = 500;
-	public float maxWood = 500;
+	public float maxHunger = 20f;
+	public float maxThirst = 15f;
+	public float maxMorale = 250f;
+	public float maxRepair = 30f;
+	public float maxFood = 500f;
+	public float maxWater = 500f;
+	public float maxWood = 500f;
 
 	public int defaultDays;
 

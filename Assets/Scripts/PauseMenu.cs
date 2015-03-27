@@ -38,6 +38,8 @@ public class PauseMenu : MonoBehaviour
 		"Programming: Patrick, Jimmy, Ho, T.J.",
 		"MIT Liscence, yada yada"} ;
 		public Texture[] crediticons;
+
+		public LoadingScreen load;
 	
 		public enum Page
 		{
@@ -166,6 +168,10 @@ public class PauseMenu : MonoBehaviour
 						Application.absoluteURL.StartsWith ("") ||
 						Application.absoluteURL.StartsWith ("");
 		
+		}
+
+		void LoadMainMenu() {
+			StartCoroutine( load.DisplayLoadingScreen ("MainMenu") );
 		}
 
 		void ShowSave() {
@@ -338,6 +344,8 @@ public class PauseMenu : MonoBehaviour
 				if (GUILayout.Button (IsBeginning () ? "Play" : "Continue")) {
 						UnPauseGame ();
 				}
+				if (GUILayout.Button ("Main Menu"))
+		    		LoadMainMenu();
 				if (GUILayout.Button ("Save")) {
 					currentPage = Page.Save;
 				}

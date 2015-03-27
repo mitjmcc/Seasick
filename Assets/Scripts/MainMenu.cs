@@ -5,6 +5,7 @@ using System.Collections;
 public class MainMenu : MonoBehaviour {
 
 	public Button play, settings, credits, exit;
+	public LoadingScreen load;
 
 	// Use this for initialization
 	void Start () {
@@ -17,18 +18,18 @@ public class MainMenu : MonoBehaviour {
 	}
 
 	public void StartGame() {
+		StartCoroutine (load.GetComponent<LoadingScreen> ().DisplayLoadingScreen ("Main"));
+	}
+
+	public static void Options() {
 
 	}
 
-	public void Options() {
+	public static void Credits() {
 
 	}
 
-	public void Credits() {
-
-	}
-
-	public void Exit() {
+	public static void Exit() {
 		Application.Quit ();
 	}
 }
