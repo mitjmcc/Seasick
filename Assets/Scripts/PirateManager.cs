@@ -9,6 +9,7 @@ public class PirateManager : MonoBehaviour
 	public Pirate[] pirates;
 	public Pirate lastSelected;
 	public Sprite[] pirateFaces = new Sprite[5];
+	public GameObject[] icons;
 	public GameObject selector;
 
 	public static PirateManager instance { get; private set; }
@@ -40,11 +41,12 @@ public class PirateManager : MonoBehaviour
 
 	public bool isAPirateSelected ()
 	{
+		bool result = false;
 		foreach (Pirate e in pirates) {
 			if (e.selected)
-				return true;
+				result = e.selected;
 		}
-		return false;
+		return result;
 	}
 
 //	public void pirateJobReset ()
@@ -79,23 +81,51 @@ public class PirateManager : MonoBehaviour
 		if (Input.GetMouseButtonDown (0)) {
 			foreach (Pirate e in pirates)
 				e.selected = false;
-			selector.GetComponent<Renderer>().enabled = false;
+
+			selector.SetActive(false);
+			setIconsActive(false);
+
 			Debug.Log ("Hit nothing");
 			RaycastHit hitInfo = new RaycastHit ();
 			bool hit = Physics.Raycast (Camera.main.ScreenPointToRay (Input.mousePosition), out hitInfo);
 			if (hit) {
 				Debug.Log ("Hit " + hitInfo.transform.gameObject.name);
-				if (hitInfo.transform.gameObject.tag == "Pirates" && !hitInfo.transform.gameObject.GetComponent<Pirate> ().doneJob) {
+				if (hitInfo.transform.gameObject.tag == "Pirates"
+				    && !hitInfo.transform.gameObject.GetComponent<Pirate> ().doneJob) {
+
 					selector.transform.parent = null;
-					selector.GetComponent<Renderer>().enabled = true;
+					selector.SetActive(true);
+
+					setIconsActive(true);
+
 					Pirate currentPirate = hitInfo.transform.gameObject.GetComponent<Pirate> ();
 					currentPirate.selected = true;
 					currentPirate.say (0);
-					selector.transform.position = currentPirate.transform.position + new Vector3 (0, 5, 0);
+
+					selector.transform.position
+						= currentPirate.transform.position + new Vector3 (0, 5, 0);
 					selector.transform.SetParent (currentPirate.transform, true);
+
+					setIconsParent(currentPirate.gameObject);
 					lastSelected = hitInfo.transform.gameObject.GetComponent<Pirate> ();
 				}
 			}
+		}
+	}
+
+	public void setIconsActive(bool b) {
+		foreach(GameObject g in icons) {
+			g.SetActive(b);
+		}
+	}
+
+	public void setIconsParent(GameObject gb) {
+		foreach (GameObject g in icons) {
+			g.transform.position = gb.transform.position
+				+ g.GetComponent<LockRotation>().buffer;
+			g.transform.rotation = g.GetComponent<LockRotation>().rotate;
+			g.transform.SetParent (gb.transform, true);
+			g.GetComponent<LockRotation>().SetTarget(gb);
 		}
 	}
 

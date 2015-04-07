@@ -125,11 +125,13 @@ public class DayNightController : MonoBehaviour
 		// Rudementary phase-check algorithm:  
 		if (currentCycleTime > nightTime && currentPhase == DayPhase.Dusk) {  
 			SetNight ();
+			GameObject.FindWithTag("Lanterns").SetActive(true);
 			Time.timeScale = 20;
 		} else if (currentCycleTime > duskTime && currentPhase == DayPhase.Day) {  
 			SetDusk ();  
 		} else if (currentCycleTime > dayTime && currentPhase == DayPhase.Dawn) {  
 			SetDay ();
+			GameObject.FindWithTag("Lanterns").SetActive(false);
 		} else if (currentCycleTime > dawnTime && currentCycleTime < dayTime && currentPhase == DayPhase.Night) {  
 			SetDawn ();
 			Time.timeScale = 1;

@@ -43,7 +43,7 @@ public class JobManager : MonoBehaviour
 					updateValues (j.GetComponent<Job> (), p.GetComponent<Pirate> ());
 					if (j.GetComponent<Job> ().boatJob)
 						boating (j, p);
-					p.GetComponent<Pirate> ().agent.enabled = false;
+					//p.GetComponent<Pirate> ().agent.enabled = false;
 					p.GetComponent<Pirate> ().lastJob = j.GetComponent<Job> ();
 				}
 			}

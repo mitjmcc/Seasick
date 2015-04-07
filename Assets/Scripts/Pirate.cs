@@ -4,11 +4,15 @@ using UnityEngine.UI;
 
 public class Pirate : MonoBehaviour
 {
+	public string name;
+	
+	public Animator anim;
 	public NavMeshAgent agent;
 
 	public float hunger;
 	public float thirst;
 	public float morale;
+	public double jobStartTime;
 
 	private float maxHunger;
 	private float maxThirst;
@@ -18,19 +22,16 @@ public class Pirate : MonoBehaviour
 	public Vector3 curLocation;
 	public Vector3 lastLocation;
 
-	public bool selected = false;
+	public bool selected;
 	public bool doneJob = false;
+	public bool hungry;
+	public bool thirsty;
+	public bool lowMor;
 
 	public Job lastJob;
-	public double jobStartTime;
-
-	public string name;
-
-	public AudioClip[] pirateSpeechClips;
-
-	public Animator anim;
-
 	private GameObject statAnimator;
+	public GameObject[] icons;
+	public AudioClip[] pirateSpeechClips;
 
 	//Initialization
 	void Start ()
@@ -64,7 +65,7 @@ public class Pirate : MonoBehaviour
 
 		if (selected) {
 			updateUI ();
-		}	
+		}
 
 		HungerAndThirst ();
 
@@ -73,10 +74,23 @@ public class Pirate : MonoBehaviour
 
 	private void HungerAndThirst() {
 		if (DayNightController.minutes == 59 && DayNightController.worldTimeHour % 1 == 0) {
-			updateValues (true, true, false, false, -1);
+			updateValues (true, true, false, false, -.1f);
 			if (hunger <= 0 || thirst <= 0)
-				updateValues(false, false, true, false, -1);
+				updateValues(false, false, true, false, -.01f);
 		}
+
+		if (hunger <= maxHunger / 2)
+			hungry = true;
+		else
+			hungry = false;
+		if (thirst <= maxThirst / 2)
+			thirsty = true;
+		else
+			thirsty = false;
+		if (morale <= maxMorale / 2)
+			lowMor = true;
+		else
+			lowMor = false;
 	}
 
 	public void say (int audioIndex)
@@ -93,6 +107,7 @@ public class Pirate : MonoBehaviour
 		statAnimator.GetComponent<StatBarAnimator> ().changeHunger (hunger);
 		statAnimator.GetComponent<StatBarAnimator> ().changeThirst (thirst);
 		statAnimator.GetComponent<StatBarAnimator> ().changeMorale (morale);
+
 		//Sprite [] pirateFaces = GameObject.Find ("PirateManager").GetComponent<PirateManager> ().pirateFaces;
 		//GameObject.Find ("StatBars").GetComponent<StatBarAnimator> ().changeFaces (pirateFaces);
 	}
