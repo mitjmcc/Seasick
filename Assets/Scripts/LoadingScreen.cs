@@ -25,6 +25,10 @@ public class LoadingScreen : MonoBehaviour {
 		//	StartCoroutine (DisplayLoadingScreen ());
 	}
 
+	public void LoadMainMenu() {
+		StartCoroutine( DisplayLoadingScreen ("MainMenu") );
+	}
+
 	public IEnumerator DisplayLoadingScreen(string SceneToLoad) {
 		background.SetActive (true);
 		bar.SetActive (true);

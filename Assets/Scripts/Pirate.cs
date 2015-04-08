@@ -39,15 +39,23 @@ public class Pirate : MonoBehaviour
 		maxHunger = DataValues.instance.getMaxHunger ();
 		maxThirst = DataValues.instance.getMaxThirst ();
 		maxMorale = DataValues.instance.getMaxMorale ();
+
 		hunger = (int) maxHunger;
 		thirst = (int) maxThirst;
 		morale = (int) maxMorale;
+
 		agent = gameObject.GetComponent<NavMeshAgent> ();
 		origLocation = gameObject.transform.position;
 		curLocation = gameObject.transform.position;
 		lastLocation = gameObject.transform.position;
+
 		anim = gameObject.GetComponent<Animator> ();
 		statAnimator = GameObject.Find ("StatBars");
+
+		foreach (GameObject g in icons) {
+			g.SetActive (false);
+			g.GetComponent<LockRotation>().SetParentTransform(transform);
+		}
 	}
 
 	void Update ()
@@ -68,6 +76,7 @@ public class Pirate : MonoBehaviour
 		}
 
 		HungerAndThirst ();
+		UpdateIcons ();
 
 		lastLocation = curLocation;
 	}
@@ -110,6 +119,27 @@ public class Pirate : MonoBehaviour
 
 		//Sprite [] pirateFaces = GameObject.Find ("PirateManager").GetComponent<PirateManager> ().pirateFaces;
 		//GameObject.Find ("StatBars").GetComponent<StatBarAnimator> ().changeFaces (pirateFaces);
+	}
+
+	public void UpdateIcons() {
+		icons [0].SetActive (hungry ? true : false);
+		icons [0].GetComponent<LockRotation> ().enabled = hungry ? true : false;
+		icons [1].SetActive (thirsty ? true : false);
+		icons [1].GetComponent<LockRotation> ().enabled = thirsty ? true : false;
+		icons [2].SetActive (lowMor ? true : false);
+		icons [2].GetComponent<LockRotation> ().enabled = lowMor ? true : false;
+
+		if (selected) {
+			if (hungry) {
+				icons[0].transform.SetParent(GameObject.Find ("Eating").transform);
+				icons[0].GetComponent<LockRotation>().SetParentTransform(GameObject.Find ("Eating").transform);
+			}
+
+			if (thirsty) {
+				icons[1].transform.SetParent(GameObject.Find ("Drinking").transform);
+				icons[1].GetComponent<LockRotation>().SetParentTransform(GameObject.Find ("Drinking").transform);
+			}
+		}
 	}
 
 	public void updateValues (bool h, bool t, bool m, bool reset, float delta)

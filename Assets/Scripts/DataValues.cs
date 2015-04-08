@@ -180,6 +180,19 @@ public class DataValues : MonoBehaviour
 	{
 		return maxMorale;
 	}
+
+	void OnDestroy() {
+
+		totalHunger = 0f;
+		totalThirst = 0f;
+		totalMorale = 0f;
+		
+		totalFood = 200f;
+		totalWater = 200f;
+		totalWood = 0f;
+		
+		repair = 0f;
+	}
 }
 
 [Serializable]
