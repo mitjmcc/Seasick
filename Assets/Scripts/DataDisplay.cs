@@ -28,6 +28,7 @@ public class DataDisplay : MonoBehaviour
 		textValues [2].text = "Morale: " + DataValues.instance.totalMorale;
 		textValues [3].text = "Days Left: " + (DataValues.instance.defaultDays - DayNightController.daysPast);
 		textValues [4].text = "Wood: " + DataValues.instance.totalWood;
+		textValues[5].text = "Repair: " + DataValues.instance.repair / DataValues.instance.maxRepair;
 	}
 
 	private void updateBars() {
@@ -35,5 +36,6 @@ public class DataDisplay : MonoBehaviour
 		bars [1].fillAmount = DataValues.instance.totalWater / DataValues.instance.maxWater;
 		bars [2].fillAmount = DataValues.instance.totalWood / DataValues.instance.maxWood;
 		bars [3].fillAmount = DataValues.instance.totalMorale / DataValues.instance.maxMorale;
+		bars [4].fillAmount = DataValues.instance.repair / DataValues.instance.maxRepair;
 	}
 }

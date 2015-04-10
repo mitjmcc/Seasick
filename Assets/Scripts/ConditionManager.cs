@@ -101,7 +101,7 @@ public class ConditionManager : MonoBehaviour {
 			Color temp = color1;
 			temp.a = 1f;
 			mast1.color = temp;
-			Debug.Log ("Yelp");
+			//Debug.Log ("Yelp");
 		}
 		if (DataValues.instance.repair / DataValues.instance.maxRepair > .75) {
 			Color temp2 = color2;
@@ -119,8 +119,9 @@ public class ConditionManager : MonoBehaviour {
 		temp2.a = 0f;
 		mast2.color = temp2;
 
-		GameOverScreen.SetActive(false);
-		WinScreen.SetActive(false);
+	
+	//	GameOverScreen.SetActive(false);
+//		WinScreen.SetActive(false);
 		
 	}
 }

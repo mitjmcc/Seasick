@@ -40,9 +40,9 @@ public class Pirate : MonoBehaviour
 		maxThirst = DataValues.instance.getMaxThirst ();
 		maxMorale = DataValues.instance.getMaxMorale ();
 
-		hunger = (int) maxHunger;
-		thirst = (int) maxThirst;
-		morale = (int) maxMorale;
+		hunger = maxHunger;
+		thirst = maxThirst;
+		morale = maxMorale;
 
 		agent = gameObject.GetComponent<NavMeshAgent> ();
 		origLocation = gameObject.transform.position;

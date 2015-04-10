@@ -18,7 +18,7 @@ public class DataValues : MonoBehaviour
 	public float repair = 0f;
 	
 	public float maxHunger = 20f;
-	public float maxThirst = 15f;
+	public float maxThirst = 50f;
 	public float maxMorale = 250f;
 	public float maxRepair = 30f;
 	public float maxFood = 500f;
@@ -128,7 +128,7 @@ public class DataValues : MonoBehaviour
 
 	public void setTotalHunger (int effect)
 	{
-		totalHunger += effect;
+		totalHunger = checkValue(totalHunger + effect);
 //		Debug.Log ("Total Hunger: " + totalHunger);
 	}
 	
@@ -140,30 +140,30 @@ public class DataValues : MonoBehaviour
 	
 	public void setTotalMorale (int effect)
 	{
-		totalMorale += effect;
+		totalMorale = checkValue(totalMorale + effect);
 //		Debug.Log ("Total Morale: " + totalMorale);
 	}
 
 	public void setFood (int effect)
 	{
-		totalFood += effect;
+		totalFood = checkValue(totalFood + effect);
 //		Debug.Log (totalFood);
 	}
 	
 	public void setWater (int effect)
 	{
-		totalWater += effect;
+		totalWater = checkValue(totalWater + effect);
 //		Debug.Log (totalWater);
 	}
 	
 	public void setWood (int effect)
 	{
-		totalWood += effect;
+		totalWood = checkValue(totalWood + effect);
 //		Debug.Log (totalWood);
 	}
 
 	public void setRepair (int effect) {
-		repair += effect;
+		repair = checkValue(repair + effect);
 	}
 	
 	public float getMaxHunger ()
@@ -192,8 +192,16 @@ public class DataValues : MonoBehaviour
 		totalWood = 0f;
 		
 		repair = 0f;
+
+	}
+
+	public float checkValue(float f) {
+		if (f <= 0f)
+			f = 0;
+		return f;
 	}
 }
+
 
 [Serializable]
 class SeasickData
