@@ -71,6 +71,8 @@ public class DayNightController : MonoBehaviour
 	// blend value of skybox using SkyBoxBlend Shader in render settings range 0-1  
 	private float SkyboxBlendFactor = 0.0f; 
 
+	public GameObject lanterns;
+
 	/// Initializes working variables and performs starting calculations.  
 	void Initialize ()
 	{  
@@ -125,11 +127,13 @@ public class DayNightController : MonoBehaviour
 		// Rudementary phase-check algorithm:  
 		if (currentCycleTime > nightTime && currentPhase == DayPhase.Dusk) {  
 			SetNight ();
+			lanterns.SetActive(true);
 			Time.timeScale = 20;
 		} else if (currentCycleTime > duskTime && currentPhase == DayPhase.Day) {  
 			SetDusk ();  
 		} else if (currentCycleTime > dayTime && currentPhase == DayPhase.Dawn) {  
 			SetDay ();
+			GameObject.FindWithTag("Lanterns").SetActive(false);
 		} else if (currentCycleTime > dawnTime && currentCycleTime < dayTime && currentPhase == DayPhase.Night) {  
 			SetDawn ();
 			Time.timeScale = 1;

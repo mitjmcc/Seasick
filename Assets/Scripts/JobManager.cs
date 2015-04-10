@@ -21,12 +21,6 @@ public class JobManager : MonoBehaviour
 		checkForJob ();
 	}
 
-	public static void calculateMoralEffects ()
-	{
-			//TODO: Call this function at the beginning of each day
-
-	}
-
 	///Go through all Jobs and all pirates and checks for an intersection
 	///If there is an intersection it will call doAffect which increases/decreases the appopriate stat
 	///I think it calls do affect multiple times, so that needs to be sorted out.
@@ -43,7 +37,8 @@ public class JobManager : MonoBehaviour
 					updateValues (j.GetComponent<Job> (), p.GetComponent<Pirate> ());
 					if (j.GetComponent<Job> ().boatJob)
 						boating (j, p);
-					p.GetComponent<Pirate> ().agent.enabled = false;
+
+					//p.GetComponent<Pirate> ().agent.enabled = false;
 					p.GetComponent<Pirate> ().lastJob = j.GetComponent<Job> ();
 				}
 			}

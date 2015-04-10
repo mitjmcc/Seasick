@@ -38,11 +38,14 @@ public class PauseMenu : MonoBehaviour
 		"Programming: Patrick, Jimmy, Ho, T.J.",
 		"MIT Liscence, yada yada"} ;
 		public Texture[] crediticons;
+
+		public LoadingScreen load;
 	
 		public enum Page
 		{
 				None,
 				Main,
+				Save,
 				Options,
 				Credits
 		}
@@ -127,25 +130,28 @@ public class PauseMenu : MonoBehaviour
 	
 		void OnGUI ()
 		{
-				if (skin != null) {
-						GUI.skin = skin;
+			if (skin != null) {
+				GUI.skin = skin;
+			}
+			ShowStatNums ();
+			ShowLegal ();
+			if (IsGamePaused ()) {
+				GUI.color = statColor;
+				switch (currentPage) {
+				case Page.Main:
+					MainPauseMenu ();
+					break;
+				case Page.Save:
+					ShowSave();
+					break;
+				case Page.Options:
+					ShowToolbar ();
+					break;
+				case Page.Credits:
+					ShowCredits ();
+					break;
 				}
-				ShowStatNums ();
-				ShowLegal ();
-				if (IsGamePaused ()) {
-						GUI.color = statColor;
-						switch (currentPage) {
-						case Page.Main:
-								MainPauseMenu ();
-								break;
-						case Page.Options:
-								ShowToolbar ();
-								break;
-						case Page.Credits:
-								ShowCredits ();
-								break;
-						}
-				}   
+			}   
 		}
 	
 		void ShowLegal ()
@@ -162,6 +168,21 @@ public class PauseMenu : MonoBehaviour
 						Application.absoluteURL.StartsWith ("") ||
 						Application.absoluteURL.StartsWith ("");
 		
+		}
+
+		void LoadMainMenu() {
+			StartCoroutine( load.DisplayLoadingScreen ("MainMenu") );
+		}
+
+		void ShowSave() {
+			BeginPage (300, 300);
+			if (GUILayout.Button ("Save")) {
+				DataValues.instance.Save();
+			}
+			if (GUILayout.Button ("Load")) {
+				DataValues.instance.Load();
+			}
+			EndPage ();
 		}
 	
 		void ShowToolbar ()
@@ -322,7 +343,11 @@ public class PauseMenu : MonoBehaviour
 				BeginPage (200, 200);
 				if (GUILayout.Button (IsBeginning () ? "Play" : "Continue")) {
 						UnPauseGame ();
-			
+				}
+				if (GUILayout.Button ("Main Menu"))
+		    		LoadMainMenu();
+				if (GUILayout.Button ("Save")) {
+					currentPage = Page.Save;
 				}
 				if (GUILayout.Button ("Options")) {
 						currentPage = Page.Options;

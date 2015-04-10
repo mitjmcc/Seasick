@@ -26,6 +26,7 @@ public class PirateManager : MonoBehaviour
 	void Update ()
 	{
 		checkForPirate ();
+		DataValues.instance.calculateTotals ();
 	}
 
 	public Pirate getSelectedPirate ()
@@ -39,11 +40,12 @@ public class PirateManager : MonoBehaviour
 
 	public bool isAPirateSelected ()
 	{
+		bool result = false;
 		foreach (Pirate e in pirates) {
 			if (e.selected)
-				return true;
+				result = e.selected;
 		}
-		return false;
+		return result;
 	}
 
 //	public void pirateJobReset ()
@@ -67,10 +69,17 @@ public class PirateManager : MonoBehaviour
 			p.gameObject.transform.position = p.origLocation;
 			p.agent.enabled = true;
 			p.lastJob.gameObject.transform.position = p.lastJob.origLocation;
+			foreach (GameObject g in p.GetComponent<Pirate>().icons) {
+				if (g.GetComponent<LockRotation> ().enabled) {
+					g.transform.SetParent (p.transform);
+					g.GetComponent<LockRotation> ().SetParentTransform (p.transform);
+				}
+			}
+			
+			p.anim.SetBool ("walk", false);
+			p.agent.SetDestination (p.origLocation);
+			p.doneJob = false;
 		}
-		p.anim.SetBool ("walk", false);
-		p.agent.SetDestination (p.origLocation);
-		p.doneJob = false;
 	}
 
 	public void checkForPirate ()
@@ -78,20 +87,28 @@ public class PirateManager : MonoBehaviour
 		if (Input.GetMouseButtonDown (0)) {
 			foreach (Pirate e in pirates)
 				e.selected = false;
-			selector.GetComponent<Renderer>().enabled = false;
+
+			selector.SetActive(false);
+
 			Debug.Log ("Hit nothing");
 			RaycastHit hitInfo = new RaycastHit ();
 			bool hit = Physics.Raycast (Camera.main.ScreenPointToRay (Input.mousePosition), out hitInfo);
 			if (hit) {
 				Debug.Log ("Hit " + hitInfo.transform.gameObject.name);
-				if (hitInfo.transform.gameObject.tag == "Pirates" && !hitInfo.transform.gameObject.GetComponent<Pirate> ().doneJob) {
+				if (hitInfo.transform.gameObject.tag == "Pirates"
+				    && !hitInfo.transform.gameObject.GetComponent<Pirate> ().doneJob) {
+
 					selector.transform.parent = null;
-					selector.GetComponent<Renderer>().enabled = true;
+					selector.SetActive(true);
+
 					Pirate currentPirate = hitInfo.transform.gameObject.GetComponent<Pirate> ();
 					currentPirate.selected = true;
 					currentPirate.say (0);
-					selector.transform.position = currentPirate.transform.position + new Vector3 (0, 5, 0);
+
+					selector.transform.position
+						= currentPirate.transform.position + new Vector3 (0, 5, 0);
 					selector.transform.SetParent (currentPirate.transform, true);
+
 					lastSelected = hitInfo.transform.gameObject.GetComponent<Pirate> ();
 				}
 			}

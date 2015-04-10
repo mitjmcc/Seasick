@@ -8,7 +8,7 @@ public class NightlyEventManager : MonoBehaviour {
 	
 	public Text currentDay;
 	public NightlyEvent lastEvent;
-	public Image book;
+	public GameObject book;
 
 	//We make a static variable to our MusicManager instance
 	public static NightlyEventManager instance { get; private set; }
@@ -21,7 +21,6 @@ public class NightlyEventManager : MonoBehaviour {
 
 	void Update () {
 		if (Input.GetKeyDown ("return")) {
-			Time.timeScale = 1;
 			deactivateEvent ();
 		}
 	}
@@ -36,13 +35,16 @@ public class NightlyEventManager : MonoBehaviour {
 		lastEvent.GetComponent<Text> ().enabled = true;
 		currentDay.text = "Day: " + (DayNightController.daysPast + 1);
 		currentDay.enabled = true;
-		book.enabled = true;
+		//book.enabled = true;
+		book.SetActive(true);
+		
 		lastEvent.doAffect ();
 	}
 
 	public void deactivateEvent() {
+		Time.timeScale = 1;
 		lastEvent.GetComponent<Text> ().enabled = false;
-		book.enabled = false;
+		book.SetActive(false);
 		currentDay.enabled = false;
 	}
 }
